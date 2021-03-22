@@ -21,6 +21,8 @@ function setup() {
   background(215);
   audio = true;
   var button = createButton('button');
+  button.position(100, 100);
+  button.size(200, 100);
   document.querySelector('button')?.addEventListener('click', async () => {
   	await Tone.start()
   	console.log('audio is ready')
