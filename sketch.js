@@ -17,7 +17,7 @@ let modulationIndexMap = 10;
 
 
 function setup() {
-  createCanvas(300, 300);
+  createCanvas(windowWidth, windowHeight);
   background(215);
   audio = true;
   var button = createButton('button');
