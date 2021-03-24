@@ -21,6 +21,7 @@ let fade = 155;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  pixelDensity(1);
   fmOsc.harmonicity.value = harmonicityVal[2]
   fmOsc2.harmonicity.value = harmonicityVal[2]
 
