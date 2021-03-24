@@ -39,6 +39,10 @@ function mousePressed() {
 }
 
 function touchStarted(){
+  Tone.start();
+  fmOsc.start();
+  fmOsc2.start();
+  started = true;
   if (started == true) {
       return false;
   } else {
