@@ -14,49 +14,76 @@ let harmonicityMap;
 let prevHarmonicityMap;
 let frequencyMap = 0;
 let modulationIndexMap = 10;
+let started = false;
+let breakMe = false;
+let fade = 155;
 
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  background(215);
-  audio = true;
-  var button = createButton('button');
-  button.position(100, 100);
-  button.size(200, 100);
-  document.querySelector('button')?.addEventListener('click', async () => {
-  	await Tone.start()
-  	console.log('audio is ready')
-    audio = false;
-  })
   fmOsc.harmonicity.value = harmonicityVal[2]
   fmOsc2.harmonicity.value = harmonicityVal[2]
 
 }
 
 function mousePressed() {
-  if (audio == false) {
-    const now = Tone.now();
+  if (started == true) {
+      return false;
+  } else {
+    Tone.start();
     fmOsc.start();
     fmOsc2.start();
-    audio = true;
-  } else if (audio == true) {
-    fmOsc.stop();
-    fmOsc2.stop();
-    audio = false;
+    started = true;
   }
-
 }
 
-function harmonictyRamp() {
-    fmOsc.harmonicity.linearRampToValueAtTime(harmonicityVal[harmonicityMap], Tone.now() + 0.25);
+function touchStarted(){
+  if (started == true) {
+      return false;
+  } else {
+    Tone.start();
+    fmOsc.start();
+    fmOsc2.start();
+    started = true;
+  }
+}
+
+
+function startScreen() {
+  if (started == false) {
+    graphics();
+  } else if (started == true) {
+    fade -= 5;
+    graphics();
+    if (fade < 1) {
+      breakMe = true;
+    }
+  }
+}
+
+function graphics(){
+  let gradient;
+  let welcomeText;
+  fill(50, fade);
+  gradient = rect(0, 0, width, height);
+  fill(250, fade);
+  textSize(width/20);
+  textAlign(CENTER, CENTER);
+  welcomeText = text("Touch to Begin", width/2, height/2);
 }
 
 function draw() {
-  ellipse(20 , 20, 20);
+  background(205);
+  fill(225, 15, 33, 200);
+  ellipse(width/2, height/2, 200);
+  startScreen();
+  //console.log(fade);
+  noStroke();
   prevHarmonicityMap = harmonicityMap;
   for (var i = 0  ;  i < touches.length  ;  i++) {
      modulationIndexMap = map(touches[0].x, 0, width, 0.02, 20);
      frequencyMap = map(touches[0].y, 0, height, -2, 2);
+
   }
   // harmonicityMap = map(touches[i].y, 0, height, 0, 6);
   // harmonicityMap = round(harmonicityMap);
@@ -81,10 +108,6 @@ function draw() {
   amOsc.partialCount = partialMap;
   partialAmpMap = map(mouseX, 0, width, )
   */
-}
-
-function touchStarted(){
-  return false;
 }
 
 function touchMoved(){
